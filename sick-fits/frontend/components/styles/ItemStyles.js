@@ -10,7 +10,8 @@ const Item = styled.div`
   img {
     width: 100%;
     height: 400px;
-    object-fit: cover;
+    object-fit: scale-down;
+    /* object-fit: cover; */
   }
   p {
     font-size: 12px;
