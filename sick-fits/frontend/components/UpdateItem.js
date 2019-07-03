@@ -12,8 +12,8 @@ const SINGLE_ITEM_QUERY = gql`
       id
       title
       description
-      image
-      largeImage
+      #image
+      #largeImage
       price
     }
   }
@@ -71,7 +71,8 @@ class UpdateItem extends Component {
   };
 
   uploadFile = async e => {
-    console.log('Uploading an image');
+    console.log('Try uploading the image', e.target.files);
+    // console.log('uploading the image -> e', e);
     const { files } = e.target;
     const data = new FormData();
     data.append('file', files[0]);
@@ -86,6 +87,7 @@ class UpdateItem extends Component {
     );
     const file = await res.json();
     // console.log('TCL: UpdateItem -> file', file);
+    // console.log('Uploaded the image');
     this.setState({
       image: file.secure_url,
       largeImage: file.eager[0].secure_url,
