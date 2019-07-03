@@ -44,7 +44,7 @@ class SingleItem extends Component {
           if (loading) return <p>Loading...</p>;
           if (!data.item) return <p>Not Item Found for ID: {this.props.id}</p>;
           const { item } = data;
-          console.log(data);
+          // console.log(data);
           return (
             <SingleItemStyles>
               <Head>
