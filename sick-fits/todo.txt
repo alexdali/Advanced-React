@@ -1,0 +1,10 @@
+// TODO
+
+BACKEND
+1. datamodel.prisma
+  _current:
+  permissions: [Permission]
+  _must be
+  permissions: [Permission]!
+
+
