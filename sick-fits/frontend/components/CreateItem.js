@@ -44,7 +44,7 @@ class CreateItem extends Component {
   };
 
   uploadFile = async e => {
-    console.log('Uploading an image');
+    // console.log('Uploading an image');
     const { files } = e.target;
     const data = new FormData();
     data.append('file', files[0]);
@@ -58,7 +58,7 @@ class CreateItem extends Component {
       }
     );
     const file = await res.json();
-    console.log('TCL: CreateItem -> file', file);
+    // console.log('TCL: CreateItem -> file', file);
     this.setState({
       image: file.secure_url,
       largeImage: file.eager[0].secure_url,
@@ -75,8 +75,8 @@ class CreateItem extends Component {
               e.preventDefault();
               // call the mutation
               const res = await createItem();
-              console.log('TCL: CreateItem -> render -> res', res);
-              console.log(this.state);
+              // console.log('TCL: CreateItem -> render -> res', res);
+              // console.log(this.state);
               // change route to the single item page
               Router.push({
                 pathname: '/item',
