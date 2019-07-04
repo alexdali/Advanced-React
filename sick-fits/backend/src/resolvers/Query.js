@@ -4,10 +4,19 @@ const Query = {
   items: forwardTo('db'),
   item: forwardTo('db'),
   itemsConnection: forwardTo('db'),
-  //   async items(parent, arg, ctx, info) {
-  //     const items = await ctx.db.query.items();
-  //     return items;
-  //   },
+  me(parent, arg, ctx, info) {
+    // check if there is a current userId in request
+    if (!ctx.request.userId) {
+      return null;
+    }
+    // run query for User by userId from database
+    return ctx.db.query.user(
+      {
+        where: { id: ctx.request.userId },
+      },
+      info
+    );
+  },
 };
 
 module.exports = Query;

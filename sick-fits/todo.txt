@@ -7,4 +7,10 @@ BACKEND
   _must be
   permissions: [Permission]!
 
+  
+FRONTEND
+1. Header.js
+	NProgress  
+	progress bar not working
+
 
