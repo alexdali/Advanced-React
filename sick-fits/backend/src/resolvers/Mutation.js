@@ -2,6 +2,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { randomBytes } = require('crypto');
 const { promisify } = require('util');
+const { transport, makeANiceEmail } = require('../mail');
 
 const Mutations = {
   async createItem(parent, args, ctx, info) {
@@ -113,14 +114,25 @@ const Mutations = {
       where: { email: args.email },
       data: { resetToken, resetTokenExpiry },
     });
-    // Put it onto response
-    console.log(res);
-    // return the success message of Sign Out
+    // console.log('Mutation - resetRequest. res: ', res);
+    // Send Email with reset token
+    // console.log('transport.options', transport.options);
+    const mailRes = await transport.sendMail({
+      from: 'support@sickfits.com',
+      to: user.email,
+      subject: 'Your Password Reset Token',
+      html: makeANiceEmail(`Your password Reset token is here!
+      \n\n
+      <a href="${
+        process.env.FRONTEND_URL
+      }/reset?resetToken=${resetToken}">Click Here to Reset</a>`),
+    });
+    // console.log('Mutation - resetRequest. After mail send: ', mailRes);
+    // return the success message
     return { message: 'Thanks!' };
   },
   async resetPassword(parent, args, ctx, info) {
     // Check if the passwords match
-
     if (args.password !== args.confirmPassword) {
       throw new Error("Your Passwords don't match!");
     }
@@ -146,6 +158,7 @@ const Mutations = {
         resetTokenExpiry: null,
       },
     });
+    console.log('TCL: resetPassword -> updateUser', updateUser)
     // Generate JWT token
     const token = jwt.sign({ userId: updateUser.id }, process.env.APP_SECRET);
     // Set JWT token onto cookie
