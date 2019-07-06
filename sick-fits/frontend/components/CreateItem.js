@@ -58,11 +58,13 @@ class CreateItem extends Component {
       }
     );
     const file = await res.json();
-    // console.log('TCL: CreateItem -> file', file);
+    console.log('TCL: CreateItem -> file', file);
     this.setState({
       image: file.secure_url,
-      largeImage: file.eager[0].secure_url,
+      largeimage: file.eager[0].secure_url,
     });
+    console.log('CreateItem -> this.state.largeimage', this.state.largeimage);
+    console.log('CreateItem -> this.state.image', this.state.image);
   };
 
   render() {

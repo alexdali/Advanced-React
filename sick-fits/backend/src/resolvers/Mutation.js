@@ -7,9 +7,22 @@ const { transport, makeANiceEmail } = require('../mail');
 const Mutations = {
   async createItem(parent, args, ctx, info) {
     // check if user is logged in
+    const user = await ctx.db.query.user({
+      where: { id: ctx.request.userId },
+    });
+    if (!user) {
+      throw new Error('You must be logged in to do that!');
+    }
+    // create item
     const item = await ctx.db.mutation.createItem(
       {
         data: {
+          // relationship betweeen the Item and the User
+          user: {
+            connect: {
+              id: user.id,
+            },
+          },
           ...args,
         },
       },
@@ -158,7 +171,7 @@ const Mutations = {
         resetTokenExpiry: null,
       },
     });
-    console.log('TCL: resetPassword -> updateUser', updateUser)
+    console.log('TCL: resetPassword -> updateUser', updateUser);
     // Generate JWT token
     const token = jwt.sign({ userId: updateUser.id }, process.env.APP_SECRET);
     // Set JWT token onto cookie
