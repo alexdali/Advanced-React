@@ -106,7 +106,6 @@ const Mutations = {
     // Generate reset token by randomyseBytes
     const randomBytesPromiseified = promisify(randomBytes);
     const resetToken = (await randomBytesPromiseified(20)).toString('hex');
-    // const resetToken = (await promisify(randomBytes(20))).toString('hex');
     // Create ResetTokenExpiry
     const resetTokenExpiry = Date.now() + 3600000; // 1 hour from now
     // Put it onto user
@@ -121,25 +120,41 @@ const Mutations = {
   },
   async resetPassword(parent, args, ctx, info) {
     // Check if the passwords match
+
     if (args.password !== args.confirmPassword) {
-      throw new Error('Passwords not match!');
+      throw new Error("Your Passwords don't match!");
     }
     // Check if its a legit reset token
-    const user = ctx.db.query.user({
+    // Check if its expired
+    const [user] = await ctx.db.query.users({
       where: {
-        resetToken: ctx.response.resetToken,
+        resetToken: args.resetToken,
         resetTokenExpiry_gte: Date.now() - 3600000,
       },
     });
     if (!user) {
-      throw new Error('Thats token invalid or expired!');
+      throw new Error('This token is either invalid or expired!');
     }
-    // Check if its expired
     // Hash new password
-
+    const password = await bcrypt.hash(args.password, 10);
+    // Save the new password to the user and remove old resetToken fields
+    const updateUser = await ctx.db.mutation.updateUser({
+      where: { email: user.email },
+      data: {
+        password,
+        resetToken: null,
+        resetTokenExpiry: null,
+      },
+    });
     // Generate JWT token
+    const token = jwt.sign({ userId: updateUser.id }, process.env.APP_SECRET);
     // Set JWT token onto cookie
+    ctx.response.cookie('token', token, {
+      httpOnly: true,
+      maxAge: 1000 * 60 * 60 * 24 * 365,
+    });
     // return the new user
+    return updateUser;
   },
 };
 

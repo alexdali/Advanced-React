@@ -11,7 +11,7 @@ type Mutation {
     signin(email: String!, password: String!): User
     signout: SuccessMessage
     resetRequest(email: String!): SuccessMessage
-    resetPassword(email: String!, password: String!, confirmPassword: String!): User!
+    resetPassword(resetToken: String!, password: String!, confirmPassword: String!): User!
 }
 
 type Query {
