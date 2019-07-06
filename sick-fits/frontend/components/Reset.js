@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
+import PropTypes from 'prop-types';
 import Form from './styles/Form';
 import Error from './ErrorMessage';
 import { CURRENT_USER_QUERY } from './User';
@@ -24,6 +25,10 @@ const RESET_MUTATION = gql`
 `;
 
 class Reset extends Component {
+  static propTypes = {
+    resetToken: PropTypes.string.isRequired,
+  };
+
   state = {
     password: '',
     confirmPassword: '',
@@ -34,7 +39,7 @@ class Reset extends Component {
   };
 
   render() {
-    console.log(this.props.resetToken);
+    // console.log(this.props.resetToken);
     return (
       <Mutation
         mutation={RESET_MUTATION}
@@ -50,13 +55,13 @@ class Reset extends Component {
             method="post"
             onSubmit={async e => {
               e.preventDefault();
-              const res = await resetPassword();
-              console.log('TCL: reset password -> render -> res', res);
+              await resetPassword();
+              // console.log('TCL: reset password -> render -> res', res);
               this.setState({ password: '', confirmPassword: '' });
             }}
           >
             <fieldset disabled={loading} aria-busy={loading}>
-              <h2>Reset your Password</h2>
+              <h2>Reset Your Password</h2>
               <Error error={error} />
               <label htmlFor="password">
                 Password
@@ -69,7 +74,7 @@ class Reset extends Component {
                 />
               </label>
               <label htmlFor="confirmPassword">
-                Confirm Password
+                Confirm Your Password
                 <input
                   type="password"
                   name="confirmPassword"
