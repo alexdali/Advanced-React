@@ -8,7 +8,7 @@ const server = createServer();
 
 // middleware to handle cookies
 server.express.use(cookieParser());
-// middleware to populate current user (with JWT)
+// middleware to populate current user ID (with JWT)
 server.express.use((req, res, next) => {
   // extract token from request
   const { token } = req.cookies;
@@ -18,6 +18,24 @@ server.express.use((req, res, next) => {
     // put the userId onto the req for future requests to access
     req.userId = userId;
   }
+  next();
+});
+
+// middleware to populate current User
+server.express.use(async (req, res, next) => {
+  // check if logged in
+  if (!req.userId) return next();
+  // run query for the User by the user.Id from the req
+  const user = await db.query.user(
+    {
+      where: { id: req.userId },
+    },
+    `{id, email, name, permissions}`
+  );
+  // console.log('index.js middleware: user', user);
+  // put the user onto the req for future requests
+  req.user = user;
+
   next();
 });
 

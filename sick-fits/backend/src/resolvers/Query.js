@@ -18,6 +18,21 @@ const Query = {
       info
     );
   },
+  // async users(parent, arg, ctx, info) {
+  //   // check if logged in
+  //   if (!ctx.request.userId) {
+  //     throw new Error('You must be logged in!');
+  //   }
+  //   // check if have the permissions
+  //   hasPermission(ctx.)
+  //   // run query for User by userId from database
+  //   return ctx.db.query.user(
+  //     {
+  //       where: { id: ctx.request.userId },
+  //     },
+  //     info
+  //   );
+  // },
 };
 
 module.exports = Query;
