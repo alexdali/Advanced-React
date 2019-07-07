@@ -2,7 +2,10 @@ import Link from 'next/link';
 import styled from 'styled-components';
 import NProgress from 'nprogress';
 import Router from 'next/router';
+// import Head from 'next/head';
 import Nav from './Nav';
+// import '../style/nprogress.css';
+// import '../static/nprogress.css';
 
 Router.onRouteChangeStart = () => {
   NProgress.start();
@@ -55,6 +58,9 @@ const StyledHeader = styled.header`
 
 const Header = () => (
   <StyledHeader>
+    {/* <Head>
+      <link href="/static/nprogress.css" ref="stylesheet" />
+    </Head> */}
     <div className="bar">
       <Logo>
         <Link href="/">
