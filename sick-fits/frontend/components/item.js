@@ -14,6 +14,7 @@ class Item extends Component {
 
   render() {
     const { item } = this.props;
+    // console.log('item component this.props', this.props);
     return (
       <ItemStyles>
         {item.image && <img src={item.image} alt={item.title} />}

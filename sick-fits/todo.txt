@@ -14,6 +14,9 @@ FRONTEND
 	progress bar not working
 	
 2. PleaseSignIn для каждой страницы, где требуется логин
+3. Permissions component: updating не только кнопкой Update, но и checkbox (36 video)
+4. update items при переходе по ссылке: shop, "/"
+
 
 <!DOCTYPE html>
 <html>

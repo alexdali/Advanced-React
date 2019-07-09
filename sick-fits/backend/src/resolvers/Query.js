@@ -25,7 +25,7 @@ const Query = {
       throw new Error('You must be logged in!');
     }
     // check if the user has the permissions to query all the users
-    console.log('Query resolvers: users -> ctx.request.user', ctx.request.user);
+    // console.log('Query resolvers: users -> ctx.request.user', ctx.request.user);
     hasPermission(ctx.request.user, ['ADMIN', 'PERMISSIONUPDATE']);
     // run query all the users
     return ctx.db.query.users({}, info);
