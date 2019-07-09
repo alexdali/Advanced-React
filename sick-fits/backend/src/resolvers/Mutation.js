@@ -219,6 +219,7 @@ const Mutations = {
   },
   async addToCart(parent, args, ctx, info) {
     // check if the user signed in
+    console.log('addToCart args.id - ', args.id);
     const { userId } = ctx.request;
     if (!userId) {
       throw new Error('You must be sign in sooon');
