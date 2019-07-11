@@ -7,6 +7,7 @@ import CloseButton from './styles/CloseButton';
 import { CURRENT_USER_QUERY } from './User';
 import User from './User';
 import CartItem from './CartItem';
+import RemoveFromCart from './RemoveFromCart';
 import formatMoney from '../lib/formatMoney';
 import calcTotalPrice from '../lib/calcTotalPrice';
 

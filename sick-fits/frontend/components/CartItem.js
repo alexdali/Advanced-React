@@ -1,5 +1,7 @@
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 import formatMoney from '../lib/formatMoney';
+import RemoveFromCart from './RemoveFromCart';
 
 const CartItemStyle = styled.li`
   padding: 1rem 0;
@@ -17,9 +19,6 @@ const CartItemStyle = styled.li`
 `;
 
 const CartItem = ({ cartitem }) => {
-  // <Query {...props} query={CURRENT_USER_QUERY}>
-  //   {payload => props.children(payload)}
-  // </Query>
   console.log('CartItem props.cartitem', cartitem);
   return (
     <CartItemStyle>
@@ -34,12 +33,13 @@ const CartItem = ({ cartitem }) => {
           </em>
         </p>
       </div>
+      <RemoveFromCart id={cartitem.id} />
     </CartItemStyle>
   );
 };
 
-// Cart.propTypes = {
-//   children: PropTypes.obj.isRequired,
-// };
+CartItem.propTypes = {
+  cartItem: PropTypes.object.isRequired,
+};
 
 export default CartItem;

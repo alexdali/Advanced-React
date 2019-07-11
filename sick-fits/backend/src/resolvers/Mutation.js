@@ -253,6 +253,28 @@ const Mutations = {
       },
     });
   },
+  async removeFromCart(parent, args, ctx, info) {
+    // find the Cart Item
+    const cartItem = await ctx.db.query.cartItem(
+      {
+        where: { id: args.id },
+      },
+      `{ id user { id }}`
+    );
+    // make sure if found it
+    if (!cartItem) throw new Error('No item Found!');
+    // make sure is own that cart item
+    if (cartItem.user.id !== ctx.request.userId)
+      throw new Error("'You don't own that cart item");
+    // delete the Cart Item
+    console.log('mutation cartItem.id', cartItem.id);
+    return ctx.db.mutation.deleteCartItem(
+      {
+        where: { id: args.id },
+      },
+      info
+    );
+  },
 };
 
 module.exports = Mutations;
