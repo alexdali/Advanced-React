@@ -17,11 +17,13 @@ class DeleteItem extends Component {
     // 1. Read the cache for the items we want
     const data = cache.readQuery({ query: ALL_ITEMS_QUERY });
     console.log(data, payload);
-    // 2. Filter the deleted itemout of the page
-    data.items = data.items.filter(item => item.id !== payload.data.deleteItem.id);
+    // 2. Filter the deleted item out of the page
+    const deleteItemId = payload.data.deleteItem.id;
+    data.items = data.items.filter(item => item.id !== deleteItemId);
     // 3. Put the items back!
     cache.writeQuery({ query: ALL_ITEMS_QUERY, data });
   };
+
   render() {
     return (
       <Mutation
