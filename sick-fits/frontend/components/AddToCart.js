@@ -15,7 +15,7 @@ const ADD_TO_CART_MUTATION = gql`
 class AddToCart extends Component {
   render() {
     const { id } = this.props.item;
-    console.log(id);
+    // console.log('AddToCart this.props.item.id: ',id);
     return (
       <Mutation
         mutation={ADD_TO_CART_MUTATION}

@@ -44,8 +44,8 @@ const Cart = props => (
                     </p>
                   </header>
                   <ul>
-                    {me.cart.map(cartitem => (
-                      <CartItem key={cartitem.id} cartitem={cartitem} />
+                    {me.cart.map(cartItem => (
+                      <CartItem key={cartItem.id} cartItem={cartItem} />
                     ))}
                   </ul>
                   <footer>

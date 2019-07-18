@@ -18,22 +18,23 @@ const CartItemStyle = styled.li`
   }
 `;
 
-const CartItem = ({ cartitem }) => {
-  console.log('CartItem props.cartitem', cartitem);
+const CartItem = ({ cartItem }) => {
+  console.log('CartItem props.cartitem', cartItem);
+  // console.log('CartItem props', props);
   return (
     <CartItemStyle>
-      <img width="100" src={cartitem.item.image} alt={cartitem.item.title} />
+      <img width="100" src={cartItem.item.image} alt={cartItem.item.title} />
       <div className="cart-item-details">
-        <h3>{cartitem.item.title}</h3>
+        <h3>{cartItem.item.title}</h3>
         <p>
-          {formatMoney(cartitem.quantity * cartitem.item.price)}
+          {formatMoney(cartItem.quantity * cartItem.item.price)}
           {' - '}
           <em>
-            {cartitem.quantity} {'x'} {formatMoney(cartitem.item.price)} each
+            {cartItem.quantity} {'x'} {formatMoney(cartItem.item.price)} each
           </em>
         </p>
       </div>
-      <RemoveFromCart id={cartitem.id} />
+      <RemoveFromCart id={cartItem.id} />
     </CartItemStyle>
   );
 };
