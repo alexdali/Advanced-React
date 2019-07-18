@@ -2,8 +2,9 @@ import Link from 'next/link';
 import styled from 'styled-components';
 import NProgress from 'nprogress';
 import Router from 'next/router';
-import Cart from './Cart';
 import Nav from './Nav';
+import Cart from './Cart';
+
 // import '../style/nprogress.css';
 // import '../static/nprogress.css';
 
@@ -50,9 +51,9 @@ const StyledHeader = styled.header`
     }
   }
   .sub-bar {
-    border-bottom: 1px solid ${props => props.theme.lightgrey};
     display: grid;
     grid-template-columns: 1fr auto;
+    border-bottom: 1px solid ${props => props.theme.lightgrey};
   }
 `;
 
@@ -72,7 +73,7 @@ const Header = () => (
     <div className="sub-bar">
       <p>Search</p>
     </div>
-    <Cart>Cart</Cart>
+    <Cart />
   </StyledHeader>
 );
 
