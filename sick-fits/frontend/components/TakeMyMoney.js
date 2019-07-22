@@ -9,22 +9,19 @@ import calcTotalPrice from '../lib/calcTotalPrice';
 import Error from './ErrorMessage';
 import User, { CURRENT_USER_QUERY } from './User';
 
-// const SEARCH_ITEMS_QUERY = gql`
-//   query SEARCH_ITEMS_QUERY($searchTerm: String!) {
-//     items(
-//       where: {
-//         OR: [
-//           { title_contains: $searchTerm }
-//           { description_contains: $searchTerm }
-//         ]
-//       }
-//     ) {
-//       id
-//       image
-//       title
-//     }
-//   }
-// `;
+const CREATE_ORDER_MUTATION = gql`
+  mutation createOrder($token: String!) {
+    createOrder(token: $token) {
+      id
+      charge
+      total
+      items {
+        id
+        title
+      }
+    }
+  }
+`;
 
 function totalItems(cart) {
   // console.log('totalItems', cart);
@@ -32,8 +29,17 @@ function totalItems(cart) {
 }
 
 class TakeMyMoney extends Component {
-  onToken = res => {
+  onToken = (res, createOrder) => {
     console.log('TakeMyMoney', res);
+    // manually call the mutation once we have the stripe token
+    createOrder({
+      variables: {
+        token: res.id,
+      },
+    }).catch(err => {
+      alert(err.message);
+    });
+    // console.log('TakeMyMoney createOrder', createOrder);
   };
 
   render() {
@@ -41,18 +47,25 @@ class TakeMyMoney extends Component {
     return (
       <User>
         {({ data: { me } }) => (
-          <StripeCheckout
-            amount={calcTotalPrice(me.cart)}
-            name="Sick Fits"
-            description={`Order of ${totalItems(me.cart)} items!`}
-            image={me.cart[0].item && me.cart[0].item.image}
-            stripeKey="pk_test_zicXw2JjcZpRIghASqonKf6h00UZJbZQDH"
-            currency="USD"
-            email={me.email}
-            token={res => this.onToken(res)}
+          <Mutation
+            mutation={CREATE_ORDER_MUTATION}
+            refetchQueries={[{ query: CURRENT_USER_QUERY }]}
           >
-            {this.props.children}
-          </StripeCheckout>
+            {createOrder => (
+              <StripeCheckout
+                amount={calcTotalPrice(me.cart)}
+                name="Sick Fits"
+                description={`Order of ${totalItems(me.cart)} items!`}
+                image={me.cart[0].item && me.cart[0].item.image}
+                stripeKey="pk_test_zicXw2JjcZpRIghASqonKf6h00UZJbZQDH"
+                currency="USD"
+                email={me.email}
+                token={res => this.onToken(res, createOrder)}
+              >
+                {this.props.children}
+              </StripeCheckout>
+            )}
+          </Mutation>
         )}
       </User>
     );
