@@ -29,17 +29,17 @@ function totalItems(cart) {
 }
 
 class TakeMyMoney extends Component {
-  onToken = (res, createOrder) => {
+  onToken = async (res, createOrder) => {
     console.log('TakeMyMoney', res);
     // manually call the mutation once we have the stripe token
-    createOrder({
+    const order = await createOrder({
       variables: {
         token: res.id,
       },
     }).catch(err => {
       alert(err.message);
     });
-    // console.log('TakeMyMoney createOrder', createOrder);
+    console.log('TakeMyMoney Order', order);
   };
 
   render() {
