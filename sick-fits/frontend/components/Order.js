@@ -65,18 +65,18 @@ class Order extends Component {
                 <span>Items count</span> <span>{order.items.length}</span>
               </p>
               <div className="items">
-                {order.items.map(item => {
+                {order.items.map(item => (
                   <div className="order-item" key={item.id}>
                     <img src={item.image} alt={item.title} />
-                  </div>;
-                  <div className="item-detailes">
-                    <h2>{item.title}</h2>
-                    <p>Qty: {item.quantity}</p>
-                    <p>Each: {item.price}</p>
-                    <p>Sub: {item.price * item.quantity}</p>
-                    <p>{item.description}</p>
-                  </div>;
-                })}
+                    <div className="item-details">
+                      <h2>{item.title}</h2>
+                      <p>Qty: {item.quantity}</p>
+                      <p>Each: {formatMoney(item.price)}</p>
+                      <p>Sub: {formatMoney(item.price * item.quantity)}</p>
+                      <p>{item.description}</p>
+                    </div>
+                  </div>
+                ))}
               </div>
             </OrderStyles>
           );
