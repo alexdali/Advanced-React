@@ -36,7 +36,7 @@ const Query = {
       throw new Error("You aren't logged in!");
     }
     // query the current order
-    console.log('Query order args: ', args);
+    // console.log('Query order args: ', args);
     const order = await ctx.db.query.order({ where: { id: args.id } }, info);
     // check if the user is owner  or have permission to see this order
     const ownsOrder = order.user.id === ctx.request.userId;
@@ -47,7 +47,7 @@ const Query = {
       throw new Error("You can't have permissions to see this order!");
     }
     // return the order
-    console.log('Query order: ', order);
+    // console.log('Query order: ', order);
     return order;
   },
 };
