@@ -243,16 +243,19 @@ const Mutations = {
       });
     }
     // if it's not, then create a fresh CartItem for that user
-    return ctx.db.mutation.createCartItem({
-      data: {
-        user: {
-          connect: { id: userId },
-        },
-        item: {
-          connect: { id: args.id },
+    return ctx.db.mutation.createCartItem(
+      {
+        data: {
+          user: {
+            connect: { id: userId },
+          },
+          item: {
+            connect: { id: args.id },
+          },
         },
       },
-    });
+      info
+    );
   },
   async removeFromCart(parent, args, ctx, info) {
     // find the Cart Item
@@ -282,11 +285,7 @@ const Mutations = {
     if (!userId)
       throw new Error('You must be signed in to complete this order!');
     const user = await ctx.db.query.user(
-      {
-        where: {
-          id: userId,
-        },
-      },
+      { where: { id: userId } },
       `{
         id
         name
