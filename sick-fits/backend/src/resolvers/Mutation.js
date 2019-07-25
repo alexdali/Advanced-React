@@ -336,6 +336,7 @@ const Mutations = {
     await ctx.db.mutation.deleteManyCartItems({
       where: { id_in: cartItemIds },
     });
+    console.log('createOrder Mutation order: ', order);
     // return the Order to the client
     return order;
   },

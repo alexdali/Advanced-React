@@ -36,6 +36,7 @@ class Order extends Component {
   };
 
   render() {
+    console.log('Order this.props: ', this.props);
     return (
       <Query query={SINGLE_ORDER_QUERY} variables={{ id: this.props.id }}>
         {({ data, error, loading }) => {
