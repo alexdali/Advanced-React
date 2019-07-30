@@ -1,9 +1,9 @@
 import PleaseSignIn from '../components/PleaseSignin';
-import Orders from '../components/Orders';
+import OrderList from '../components/OrderList';
 
 const OrdersPage = props => (
   <PleaseSignIn>
-    <Orders page={parseFloat(props.query.page) || 1} />
+    <OrderList />
   </PleaseSignIn>
 );
 
