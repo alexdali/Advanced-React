@@ -36,10 +36,6 @@ const ALL_ORDERS_QUERY = gql`
   }
 `;
 
-const Center = styled.div`
-  text-align: center;
-`;
-
 const OrderUl = styled.ul`
   display: grid;
   grid-gap: 4rem;
