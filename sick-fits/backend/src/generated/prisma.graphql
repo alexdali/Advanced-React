@@ -1,5 +1,5 @@
 # source: https://eu1.prisma.sh/alextas/sick-fits/dev
-# timestamp: Tue Jul 23 2019 15:10:17 GMT+0600 (Центральная Азия (зима))
+# timestamp: Wed Jul 31 2019 13:04:01 GMT+0600 (Центральная Азия (зима))
 
 type AggregateCartItem {
   count: Int!
