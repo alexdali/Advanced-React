@@ -1,0 +1,19 @@
+{
+  "version": 2,
+  "name": "sickfits-edu-prod",
+  "builds": [
+    {
+      "src": "src/index.js",
+      "use": "@now/node-server"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/.*",
+      "dest": "src/index.js"
+    }
+  ],
+  "env": {
+    "PRISMA_ENDPOINT": "https://app-edu-prod-e395e61c3d.herokuapp.com/app-edu-prod-service/prod"
+  }
+}
