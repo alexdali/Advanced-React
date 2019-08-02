@@ -8,16 +8,34 @@ import Autocomplete from './Search';
 // import '../style/nprogress.css';
 // import '../static/nprogress.css';
 
-Router.onRouteChangeStart = () => {
+// // Router.onRouteChangeStart = () => {
+// //   NProgress.start();
+// // };
+// Router.events.on('routeChangeStart', () => {
+//   NProgress.start();
+// });
+// // Router.onRouteChangeComplete = () => {
+// //   NProgress.done();
+// // };
+// Router.events.on('routeChangeComplete', () => {
+//   NProgress.done();
+// });
+
+// Router.onRouteChangeError = () => {
+//   NProgress.done();
+// };
+
+const handleRouteChangeStart = () => {
   NProgress.start();
 };
-Router.onRouteChangeComplete = () => {
+
+const handleRouteChangeCompleteAndError = () => {
   NProgress.done();
 };
 
-Router.onRouteChangeError = () => {
-  NProgress.done();
-};
+Router.events.on('routeChangeStart', handleRouteChangeStart);
+Router.events.on('routeChangeComplete', handleRouteChangeCompleteAndError);
+Router.events.on('routeChangeError', handleRouteChangeCompleteAndError);
 
 const Logo = styled.h1`
   font-size: 4rem;
